@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Grin {
-<<<<<<< HEAD
+
     /*
      * Decodes the given file
      * @param infile, outfile, String
@@ -73,7 +73,7 @@ public class Grin {
                 System.out.println("Please check your spell, bye");
             }
     }
-=======
+
 	public static void decode(String infile, String outfile) throws IOException {
 		BitInputStream in = new BitInputStream(infile);
 		BitOutputStream out = new BitOutputStream(outfile);
@@ -128,6 +128,6 @@ public class Grin {
 		}
 
 	}
->>>>>>> d045ab1423215e9a189993994d4350e3e8c6ce9e
+
 
 }
