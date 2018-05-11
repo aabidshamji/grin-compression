@@ -3,6 +3,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Grin {
+    /*
+     * Decodes the given file
+     * @param infile, outfile, String
+     */
     public static void decode(String infile, String outfile) throws IOException {
         BitInputStream in = new BitInputStream(infile);
         BitOutputStream out = new BitOutputStream(outfile);
@@ -10,6 +14,12 @@ public class Grin {
         tree.decode(in,out);
     }
 
+    /*
+     * creates a map with the frequencies of the chars in the file
+     * @param: file, String
+     * @throws IOException
+     * @returns Code, Map<Short,Integer>
+     */
     public static Map<Short, Integer> createFrequencyMap(String file) throws IOException {
         BitInputStream in = new BitInputStream(file);
         Map<Short,Integer> Code = new HashMap<>();
@@ -31,6 +41,12 @@ public class Grin {
         return Code;
     }
 
+    /*
+     * Given a file, encodes the given file
+     * @param infile, String
+     * @param outfile, String
+     * @throws IOException
+     */
     public static void encode(String infile, String outfile) throws IOException {
         BitInputStream in = new BitInputStream(infile);
         BitOutputStream out = new BitOutputStream(outfile);
@@ -44,9 +60,9 @@ public class Grin {
     }
 
     public static void main(String[] args) throws IOException {
-        String choice = "decode"; //args[0];
-        String infile = "output.grin"; //args[1];
-        String outfile = "input.txt"; //args[2];
+        String choice = args[1];
+        String infile = args[2];
+        String outfile = args[3];
 
             if (choice.equalsIgnoreCase("encode")) {
                 encode(infile,outfile);

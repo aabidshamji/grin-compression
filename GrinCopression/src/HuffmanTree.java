@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class HuffmanTree {
+
 	private  class Node {
 		private Short value;
 		private int freq;
@@ -49,6 +50,11 @@ public class HuffmanTree {
         }
     }
 
+    /*
+    *
+    * Builds a tree based on the frequency of the characters
+    * @param m, Map<Short, Integer>
+     */
 	public HuffmanTree(Map<Short, Integer> m) {//for encode
         PriorityQueue<Node> minPQ = new PriorityQueue<>(m.size(),new NodeComparator());
 		for (Map.Entry<Short,Integer> entry : m.entrySet()) {
@@ -69,6 +75,10 @@ public class HuffmanTree {
         root = minPQ.poll();
 	}
 
+	/*
+	 * A helper method used to recursively build the tree based on input stream
+	 * @param: in, BitInputStream
+	 */
 	private Node ConstructorH (BitInputStream in) {
         if (in.hasBits()) {
             if (in.readBit() == 1) {
@@ -86,6 +96,10 @@ public class HuffmanTree {
         }
     }
 
+    /*
+     * A constructor: build a tree from given grin file
+     * @param: in, BitInputStream
+     */
 	public HuffmanTree(BitInputStream in) {//for decode
         if (in.hasBits()) {
             in.readBits(32); //read the magical number
@@ -93,6 +107,12 @@ public class HuffmanTree {
         }
 	}
 
+
+	/*
+	 * A helper method write the pre-order tree with 1 representing internal node and 0 for leave
+	 * @param: out, BitOutputStream
+	 * @param: curr, Node
+	 */
 	private void serializeH(BitOutputStream out, Node cur) {
 	    if (cur.value == null) {
 	        out.writeBit(1);
@@ -104,7 +124,10 @@ public class HuffmanTree {
         }
     }
 
-
+    /*
+     * Add the title to the output file
+     * @param: out, BitOutputStream
+     */
     public void serialize(BitOutputStream out) {//print the title
 		out.writeBits((int)1846, 32);
 		serializeH(out,root);
@@ -112,6 +135,12 @@ public class HuffmanTree {
 
 	private Map<Short, Pair<Integer,Integer>> Code = new HashMap<>();
 
+    /*
+     * Store the code for the char in a map
+     * @param cur, Node
+     * @param code, Integer
+     * @param size, Integer
+     */
 	private void findCode(Node cur, Integer code, Integer size) {
 	    if(cur.value == null) {
             Integer codeLeft = (code << 1);
@@ -125,6 +154,11 @@ public class HuffmanTree {
         }
     }
 
+    /*
+     * Reads the given file to encode and returns the coded value of that file
+     * @param in, BitInputStream
+     * @param out, BitOutputStream
+     */
     public void encode(BitInputStream in, BitOutputStream out) {
 	    findCode(root,0,0);
 		while(in.hasBits()) {
@@ -139,6 +173,11 @@ public class HuffmanTree {
         }
 	}
 
+    /*
+     * Decodes the given file by finding the coded value and printing the correct value to output file
+     * @param in, BitInputStream
+     * @param out, BitOutputStream
+     */
     public void decode(BitInputStream in, BitOutputStream out) {
 		//Node nodePtr = root;
 		short value;
