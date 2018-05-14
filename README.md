@@ -6,4 +6,4 @@ Xinya Yang <br>
 Aabid Shamji
 
 ## Description: 
-//wait for filling in
+This program can compress or decompress files via Huffman method. 
