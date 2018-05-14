@@ -37,7 +37,7 @@ public class HuffmanTree {
 
     }
 
-    Node root;
+    private Node root;
 
     private static class NodeComparator implements Comparator<Node> {
 
@@ -99,7 +99,11 @@ public class HuffmanTree {
      */
     public HuffmanTree(BitInputStream in) {//for decode
         if (in.hasBits()) {
-            in.readBits(32); //read the magical number
+            int magical = in.readBits(32); //read the magical number
+            if (magical != 1846) {
+                System.out.println("Not a compatible file. ");
+                System.exit(0);
+            }
             root = ConstructorH(in);
         }
     }
@@ -160,8 +164,8 @@ public class HuffmanTree {
         findCode(root,0,0);
         while(in.hasBits()) {
             short cur = (short) in.readBits(8);
-                Pair<Integer, Integer> output = Code.get(cur);
-                out.writeBits(output.getKey(), output.getValue());
+            Pair<Integer, Integer> output = Code.get(cur);
+            out.writeBits(output.getKey(), output.getValue());
         }
         Pair<Integer, Integer> output = Code.get((short) 256);
         out.writeBits(output.getKey(),output.getValue());
